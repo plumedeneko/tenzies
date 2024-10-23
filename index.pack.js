@@ -432,7 +432,7 @@ function App() {
         rollCount = _React$useState6[0],
         setRollCount = _React$useState6[1];
 
-    var _React$useState7 = _react2.default.useState(parseInt(localStorage.getItem("rolls")) || 0),
+    var _React$useState7 = _react2.default.useState(parseInt(localStorage.getItem("rolls")) || Infinity),
         _React$useState8 = _slicedToArray(_React$useState7, 2),
         bestRolls = _React$useState8[0],
         setBestRolls = _React$useState8[1];
@@ -447,7 +447,7 @@ function App() {
         running = _React$useState12[0],
         setRunning = _React$useState12[1];
 
-    var _React$useState13 = _react2.default.useState(parseInt(localStorage.getItem("time")) || 0),
+    var _React$useState13 = _react2.default.useState(parseInt(localStorage.getItem("time")) || Infinity),
         _React$useState14 = _slicedToArray(_React$useState13, 2),
         bestTime = _React$useState14[0],
         setBestTime = _React$useState14[1];
@@ -479,11 +479,11 @@ function App() {
         if (allHeld && allSameValue) {
             setTenzies(true);
             setRunning(false);
-            if (rollCount < (parseInt(localStorage.getItem("rolls")) || 0)) {
+            if (rollCount < bestRolls) {
                 localStorage.setItem("rolls", "" + rollCount);
                 setBestRolls(rollCount);
             }
-            if (time < (parseInt(localStorage.getItem("time")) || 0)) {
+            if (time < bestTime) {
                 localStorage.setItem("time", "" + time);
                 setBestTime(time);
             }
@@ -581,7 +581,7 @@ function App() {
                     "p",
                     { className: "stats-text" },
                     "Best:\xA0\xA0",
-                    bestRolls
+                    bestRolls === Infinity ? "-" : bestRolls
                 )
             ),
             _react2.default.createElement(
@@ -621,22 +621,26 @@ function App() {
                     "p",
                     { className: "stats-text" },
                     "Best:\xA0",
-                    _react2.default.createElement(
-                        "span",
+                    bestTime === Infinity ? "--:--:--" : _react2.default.createElement(
+                        "div",
                         null,
-                        ("0" + Math.floor(bestTime / 60000 % 60)).slice(-2),
-                        ":"
-                    ),
-                    _react2.default.createElement(
-                        "span",
-                        null,
-                        ("0" + Math.floor(bestTime / 1000 % 60)).slice(-2),
-                        ":"
-                    ),
-                    _react2.default.createElement(
-                        "span",
-                        null,
-                        ("0" + bestTime / 10 % 100).slice(-2)
+                        _react2.default.createElement(
+                            "span",
+                            null,
+                            ("0" + Math.floor(bestTime / 60000 % 60)).slice(-2),
+                            ":"
+                        ),
+                        _react2.default.createElement(
+                            "span",
+                            null,
+                            ("0" + Math.floor(bestTime / 1000 % 60)).slice(-2),
+                            ":"
+                        ),
+                        _react2.default.createElement(
+                            "span",
+                            null,
+                            ("0" + bestTime / 10 % 100).slice(-2)
+                        )
                     )
                 )
             )

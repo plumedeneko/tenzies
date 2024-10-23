@@ -125,9 +125,9 @@ export default function App() {
                     <p className="stats-text">Best:&nbsp; 
                         {bestTime === Infinity ?
                         "--:--:--" :
-                        <><span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
+                        <div><span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
                         <span>{("0" + Math.floor((bestTime / 1000) % 60)).slice(-2)}:</span>
-                        <span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span></>
+                        <span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span></div>
                         }
                     </p>
                 </div>
