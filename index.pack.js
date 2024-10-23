@@ -622,7 +622,7 @@ function App() {
                     { className: "stats-text" },
                     "Best:\xA0",
                     bestTime === Infinity ? "--:--:--" : _react2.default.createElement(
-                        "div",
+                        "span",
                         null,
                         _react2.default.createElement(
                             "span",
