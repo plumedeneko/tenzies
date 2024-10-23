@@ -8,11 +8,11 @@ export default function App() {
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(false)
     const [rollCount, setRollCount] = React.useState(0)
-    const [bestRolls, setBestRolls] = React.useState(parseInt(localStorage.getItem("rolls")) || 0)
+    const [bestRolls, setBestRolls] = React.useState(parseInt(localStorage.getItem("rolls")) || Infinity)
     
     const [time, setTime] = React.useState(0)
     const [running, setRunning] = React.useState(false)
-    const [bestTime, setBestTime] = React.useState(parseInt(localStorage.getItem("time")) || 0)
+    const [bestTime, setBestTime] = React.useState(parseInt(localStorage.getItem("time")) || Infinity)
     
     React.useEffect(() => {
         let interval
@@ -33,11 +33,11 @@ export default function App() {
         if (allHeld && allSameValue) {
             setTenzies(true)
             setRunning(false)
-            if (rollCount < (parseInt(localStorage.getItem("rolls")) || 0)) {
+            if (rollCount < bestRolls) {
                 localStorage.setItem("rolls", `${rollCount}`)
                 setBestRolls(rollCount)
             }
-            if (time < (parseInt(localStorage.getItem("time")) || 0)) {
+            if (time < bestTime) {
                 localStorage.setItem("time", `${time}`)
                 setBestTime(time)
             }
@@ -108,7 +108,7 @@ export default function App() {
             <div className="infobar">
                 <div className="stats">
                     <p className="stats-text">Rolls: {rollCount}</p>
-                    <p className="stats-text">Best:&nbsp;&nbsp;{bestRolls}</p>
+                    <p className="stats-text">Best:&nbsp;&nbsp;{bestRolls === Infinity ? "-" : bestRolls}</p>
                 </div>
                 <button 
                     className="roll-dice" 
@@ -122,10 +122,13 @@ export default function App() {
                         <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
                         <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
                     </p>
-                    <p className="stats-text">Best:&nbsp;
-                        <span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
+                    <p className="stats-text">Best:&nbsp; 
+                        {bestTime === Infinity ?
+                        "--:--:--" :
+                        <><span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
                         <span>{("0" + Math.floor((bestTime / 1000) % 60)).slice(-2)}:</span>
-                        <span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span>
+                        <span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span></>
+                        }
                     </p>
                 </div>
             </div>
